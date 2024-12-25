@@ -29,12 +29,18 @@ export default antfu(
       //     endOfLine: "auto",
       //   },
       // ],
-      "vue/block-order": "off",
+      "antfu/if-newline": "off",
+
       "style/quotes": "off",
       "style/semi": "off",
       "style/comma-dangle": "off",
+      "style/operator-linebreak": "off",
+      "style/brace-style": "off",
+
+      "vue/block-order": "off",
       "vue/multi-word-component-names": "off",
       "vue/no-multiple-template-root": "off",
+
       "no-console": "warn",
     },
   },
