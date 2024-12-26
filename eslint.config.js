@@ -36,6 +36,8 @@ export default antfu(
       "style/comma-dangle": "off",
       "style/operator-linebreak": "off",
       "style/brace-style": "off",
+      "style/member-delimiter-style": "off",
+      "style/arrow-parens": "off",
 
       "vue/block-order": "off",
       "vue/multi-word-component-names": "off",
