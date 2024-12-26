@@ -1,6 +1,6 @@
 <template>
   <div class="h-dvh">
-    <div class="mx-auto border border-red-500">
+    <div class="mx-auto">
       <NuxtPage />
     </div>
   </div>

@@ -43,3 +43,14 @@ export interface Movie {
   vote_average: number;
   vote_count: number;
 }
+
+export interface HeaderMenus {
+  name: string;
+  link: string;
+  icon: string;
+  childs: HeaderMenusChilds[];
+}
+
+export interface HeaderMenusChilds {
+  name: string;
+}
