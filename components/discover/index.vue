@@ -4,9 +4,9 @@
       <h2 class="text-white text-2xl">Discover Movies</h2>
       <div class="flex gap-4">
         <button
-          id="button-popular"
+          id="button-popularity"
           class="px-4 py-2 rounded-full bg-gray-800 text-white transition-colors"
-          @click="emit('onChangeFilterDiscoverMovies', 'popular')"
+          @click="emit('onChangeFilterDiscoverMovies', 'popularity')"
         >
           Popularity
         </button>
@@ -30,13 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  Movie,
-  // ResUpcomingMovie,
-  // SwiperConfig,
-  // SwiperRef,
-} from "~/shared/interfaces";
-// import { authorization } from "~/shared/auth";
+import type { Movie } from "~/shared/interfaces";
 
 const props = defineProps({
   discoverMovies: {
@@ -45,7 +39,7 @@ const props = defineProps({
   },
   filterDisscoverMovies: {
     type: String,
-    default: "popular",
+    default: "popularity",
   },
 });
 const emit = defineEmits(["onChangeFilterDiscoverMovies"]);
@@ -53,12 +47,4 @@ const emit = defineEmits(["onChangeFilterDiscoverMovies"]);
 onMounted(() => {
   emit("onChangeFilterDiscoverMovies", props.filterDisscoverMovies);
 });
-
-// watch(
-//   () => props.filterDisscoverMovies,
-//   (newValue) => {
-//     selectedLocations.value = newValue;
-//   },
-//   { immediate: true, deep: true },
-// );
 </script>

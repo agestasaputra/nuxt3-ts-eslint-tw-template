@@ -38,7 +38,7 @@
           {{
             props.movie.release_date
               ? props.movie.release_date.split("-")[0]
-              : "-"
+              : "Coming soon"
           }}
         </p>
       </div>

@@ -20,13 +20,6 @@ export interface SwiperConfig {
   };
 }
 
-export interface ResUpcomingMovie {
-  results: Movie[];
-  page: number;
-  total_pages: number;
-  total_results: number;
-}
-
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -52,5 +45,10 @@ export interface HeaderMenus {
 }
 
 export interface HeaderMenusChilds {
+  name: string;
+}
+
+export interface Genre {
+  id: number;
   name: string;
 }

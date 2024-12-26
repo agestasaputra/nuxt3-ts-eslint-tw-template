@@ -28,7 +28,9 @@
             <div class="flex items-center space-x-2 text-sm text-gray-400 mt-1">
               <p class="text-[16px] text-white">
                 {{
-                  movie.release_date ? movie.release_date.split("-")[0] : "-"
+                  movie.release_date
+                    ? movie.release_date.split("-")[0]
+                    : "Coming soon"
                 }}
               </p>
               <span>•</span>
@@ -45,13 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  Movie,
-  // ResUpcomingMovie,
-  SwiperConfig,
-  SwiperRef,
-} from "~/shared/interfaces";
-// import { authorization } from "~/shared/auth";
+import type { Movie, SwiperConfig, SwiperRef } from "~/shared/interfaces";
 
 const props = defineProps({
   trendingMovies: {
@@ -60,7 +56,6 @@ const props = defineProps({
   },
 });
 
-// const trendingMovies = ref<Movie[]>([]);
 const swiperElRef = ref<SwiperRef | null>(null);
 const swiperConfig: SwiperConfig = {
   slidesPerView: 3,

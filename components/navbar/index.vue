@@ -1,6 +1,6 @@
 <template>
   <!-- Navbar -->
-  <div class="py-2 px-28 bg-[#292E36] h-[66px] flex flex-row">
+  <nav class="py-2 px-28 bg-[#292E36] h-[66px] flex flex-row">
     <div class="flex gap-12 items-center">
       <nuxt-link to="/">
         <img src="/assets/icons/moovie-time-logo.png" class="h-8" />
@@ -74,7 +74,7 @@
         </nuxt-link>
       </template>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script setup lang="ts">
