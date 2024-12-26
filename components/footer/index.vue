@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-[#15191E] p-16 flex justify-between">
+  <footer class="bg-[#15191E] py-24 px-36 flex justify-between">
     <p class="text-[#929292] text-[13px]">
       &copy;2021 MoovieTime. All rights reserved.
     </p>

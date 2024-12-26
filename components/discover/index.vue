@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute -mt-[270px] p-16 pb-0">
+  <div class="absolute -mt-[270px] py-16 px-36 pb-0">
     <div class="flex justify-between mb-9">
       <h2 class="text-white text-2xl">Discover Movies</h2>
       <div class="flex gap-4">
