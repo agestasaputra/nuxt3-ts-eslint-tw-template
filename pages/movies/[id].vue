@@ -1,136 +1,217 @@
 <template>
   <div class="h-full">
-    <Navbar />
-    <!-- Movie Hero -->
-    <div class="relative h-96">
-      <div class="absolute inset-0 bg-gradient-to-t from-gray-900"></div>
-      <div class="container mx-auto px-4 pt-20">
-        <div class="flex gap-8">
-          <!-- Poster -->
-          <img
-            :src="movie.poster"
-            :alt="movie.title"
-            class="w-64 h-96 rounded-lg object-cover"
-          />
-
-          <!-- Movie Info -->
-          <div class="text-white space-y-4">
-            <div class="flex items-center gap-4">
-              <span class="text-gray-400">{{ movie.year }}</span>
-              <h1 class="text-4xl font-bold">{{ movie.title }}</h1>
+    <!-- Backdrop -->
+    <section
+      v-if="movie"
+      class="relative bg-cover bg-center h-[500px] overflow-hidden z-10"
+      :style="{
+        backgroundImage: `url('https://image.tmdb.org/t/p/original/${movie.backdrop_path}')`,
+      }"
+    >
+      <section
+        class="h-[80px] bg-black/50 text-white py-4 px-96 relative -bottom-[85.6%]"
+      >
+        <div class="container mx-auto flex justify-around items-center">
+          <!-- Rating -->
+          <div class="flex items-center space-x-2">
+            <span class="text-yellow-500 text-3xl">★</span>
+            <div>
+              <div class="text-4xl font-semibold mx-4">7.0</div>
             </div>
-            <div class="text-sm">{{ movie.genres.join(", ") }}</div>
-
-            <!-- Stats -->
-            <div class="flex gap-8 py-4">
-              <div class="flex items-center gap-2">
-                <span class="text-yellow-400">★</span>
-                <span class="text-2xl font-bold">{{ movie.rating }}</span>
-                <span class="text-gray-400">{{ movie.votes }} votes</span>
-              </div>
-              <div class="flex gap-4 text-sm">
-                <span>{{ movie.status }}</span>
-                <span>{{ movie.language }}</span>
-                <span>{{ movie.budget }}</span>
-                <span>{{ movie.production }}</span>
-              </div>
+            <div>
+              <h6 class="text-xs text-#FFFFFF80 text-gray-400">User score</h6>
+              <p class="text-xs text-white uppercase">
+                {{ movie.vote_count }} VOTES
+              </p>
             </div>
+          </div>
+
+          <!-- Status -->
+          <div>
+            <h6 class="text-xs text-#FFFFFF80 text-gray-400">Status</h6>
+            <p class="text-xs text-white">
+              {{ movie.status || "Coming soon" }}
+            </p>
+          </div>
+
+          <!-- Language -->
+          <div>
+            <h6 class="text-xs text-#FFFFFF80 text-gray-400">Language</h6>
+            <p class="text-xs text-white uppercase">
+              {{ movie.original_language }}
+            </p>
+          </div>
+
+          <!-- Budget -->
+          <div>
+            <h6 class="text-xs text-#FFFFFF80 text-gray-400">Budget</h6>
+            <p class="text-xs text-white uppercase">{{ movie.budget }}</p>
+          </div>
+
+          <!-- Production -->
+          <div>
+            <h6 class="text-xs text-#FFFFFF80 text-gray-400">Production</h6>
+            <p class="text-xs text-white uppercase">
+              {{ movie.production_companies[0].name }}
+            </p>
+            <!-- <div class="flex items-end">
+              <p
+                v-for="company in movie.production_companies"
+                :key="company.id"
+                class="text-xs text-white uppercase"
+              >
+                {{ company.name }}
+              </p>
+            </div> -->
+          </div>
+        </div>
+      </section>
+      <div class="absolute inset-0 bg-black/50"></div>
+    </section>
+
+    <div v-if="movie" class="px-28 py-16 -mt-[270px] bg-white">
+      <!-- Overview -->
+      <div class="flex gap-8 relative z-10">
+        <img
+          :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"
+          :alt="movie.title"
+          class="h-[330px] object-cover"
+        />
+        <div class="text-white flex flex-col justify-between">
+          <div>
+            <p class="text-lg text-gray-400">
+              {{
+                movie.release_date
+                  ? movie.release_date.split("-")[0]
+                  : "Coming soon"
+              }}
+            </p>
+            <h1 class="text-4xl font-bold mt-0">{{ movie.title }}</h1>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-semibold text-[#FF0000] mb-2 uppercase">
+              Overview
+            </h3>
+            <p class="text-sm text-black">
+              {{ movie.overview }}
+            </p>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Overview -->
-    <div class="container mx-auto px-4 py-8">
-      <h2 class="text-white text-xl font-bold mb-4">OVERVIEW</h2>
-      <p class="text-gray-300">{{ movie.overview }}</p>
 
       <!-- Reviews -->
-      <div class="mt-12">
-        <h2 class="text-white text-xl font-bold mb-4">REVIEWS</h2>
-        <div class="grid grid-cols-2 gap-8">
-          <div
-            v-for="review in movie.reviews"
-            :key="review.author"
-            class="bg-gray-800 p-6 rounded-lg"
-          >
-            <div class="flex justify-between mb-4">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gray-600 rounded-full"></div>
-                <div>
-                  <div class="text-white font-medium">{{ review.author }}</div>
-                  <div class="text-gray-400 text-sm">{{ review.date }}</div>
-                </div>
-              </div>
-              <div class="flex items-center">
-                <span class="text-yellow-400">★</span>
-                <span class="text-white ml-1">{{ review.rating }}</span>
-              </div>
-            </div>
-            <p class="text-gray-300 text-sm">{{ review.content }}</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recommendations -->
-      <div class="mt-12">
-        <h2 class="text-white text-xl font-bold mb-4">RECOMMENDATION MOVIES</h2>
-        <div class="grid grid-cols-5 gap-6">
-          <div
-            v-for="movie in recommendedMovies"
-            :key="movie.id"
-            class="space-y-2"
-          >
-            <img
-              :src="movie.poster"
-              :alt="movie.title"
-              class="w-full h-64 object-cover rounded-lg"
+      <section class="mt-14">
+        <h3 class="text-sm font-semibold text-[#FF0000] mb-6 uppercase">
+          Reviews
+        </h3>
+        <div class="container mx-auto">
+          <div class="grid gap-4 grid-cols-2">
+            <CardReview
+              v-for="(review, index) in reviews"
+              :key="index"
+              :review="review"
             />
-            <div class="flex justify-between items-center">
-              <span class="text-white font-medium">{{ movie.title }}</span>
-              <span class="text-white">{{ movie.rating }}</span>
-            </div>
-            <div class="text-gray-400 text-sm">{{ movie.year }}</div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
+
+    <!-- Recommendation Movies -->
+    <section class="my-14">
+      <h3 class="text-sm font-semibold text-white mb-6 uppercase">
+        Recommendation Movies
+      </h3>
+      <div v-if="recommendationMovies" class="grid grid-cols-5 gap-6">
+        <template v-for="movie in recommendationMovies" :key="movie.id">
+          <CardMovie :movie="movie" />
+        </template>
+      </div>
+    </section>
   </div>
 </template>
 
-<script setup>
-const movie = ref({
-  title: "Wonder Woman 1984",
-  year: "2020",
-  genres: ["Fantasy", "Action", "Adventure"],
-  rating: "7.0",
-  votes: "3621",
-  status: "RELEASED",
-  language: "ENGLISH",
-  budget: "$200,000,000.00",
-  production: "DC ENTERTAINMENT",
-  overview:
-    "Wonder Woman comes into conflict with the Soviet Union during the Cold War in the 1980s and finds a formidable foe by the name of the Cheetah.",
-  reviews: [
-    {
-      author: "SWITCH.",
-      date: "December 18, 2020",
-      rating: "7.0",
-      content:
-        "It isn't as easy as saying 'Wonder Woman 1984' is a good or bad movie...",
-    },
-    // Add more reviews
-  ],
+<script setup lang="ts">
+import type { Movie, Review } from "~/shared/interfaces";
+import { authorization } from "~/shared/auth";
+
+const movie = ref<Movie | null>(null);
+const reviews = ref<Review[] | null>(null);
+const recommendationMovies = ref<Movie[] | null>(null);
+
+const route = useRoute();
+
+onMounted(() => {
+  const movieId = Number(route.params.id);
+  if (movieId) {
+    fetchMovieDetail(movieId);
+    fetchReviews(movieId);
+    fetchRecommendationMovies(movieId);
+  }
 });
 
-const recommendedMovies = ref([
-  {
-    id: 1,
-    title: "The New Mutants",
-    year: "2020",
-    rating: "7.0",
-    poster: "/mutants.jpg",
-  },
-  // Add more movies
-]);
+async function fetchMovieDetail(movieId: number) {
+  try {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+
+    const res = await $fetch<Movie>(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: authorization,
+      },
+    });
+    if (!res) throw new Error("Failed to fetch");
+    movie.value = res;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function fetchReviews(movieId: number) {
+  try {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`;
+
+    const res = await $fetch<{
+      id: number;
+      page: number;
+      results: Review[];
+      total_pages: number;
+      total_results: number;
+    }>(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: authorization,
+      },
+    });
+    if (!res) throw new Error("Failed to fetch");
+    reviews.value = res.results.slice(0, 2);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function fetchRecommendationMovies(movieId: number) {
+  try {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=en-US&page=1`;
+
+    const res = await $fetch<{
+      page: number;
+      results: Movie[];
+      total_pages: number;
+      total_results: number;
+    }>(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: authorization,
+      },
+    });
+    if (!res) throw new Error("Failed to fetch");
+    recommendationMovies.value = res.results.slice(0, 5);
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>

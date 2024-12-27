@@ -23,6 +23,8 @@ export interface SwiperConfig {
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
+  budget?: number;
+  status?: string;
   genre_ids: number[];
   id: number;
   original_language: string;
@@ -35,6 +37,14 @@ export interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  production_companies: ProductionCompany[];
+}
+
+export interface ProductionCompany {
+  id: number;
+  logo_path: string;
+  name: string;
+  origiin_country: string;
 }
 
 export interface HeaderMenus {
@@ -51,4 +61,21 @@ export interface HeaderMenusChilds {
 export interface Genre {
   id: number;
   name: string;
+}
+
+export interface Review {
+  author: string;
+  author_details: AuthorDetails;
+  content: string;
+  created_at: Date;
+  id: string;
+  updated_at: Date;
+  url: string;
+}
+
+export interface AuthorDetails {
+  name: string;
+  username: string;
+  avatar_path: string;
+  rating: number;
 }

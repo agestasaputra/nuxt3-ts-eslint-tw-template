@@ -1,80 +1,86 @@
 <template>
   <!-- Navbar -->
-  <nav class="py-2 px-28 bg-[#292E36] h-[66px] flex flex-row">
-    <div class="flex gap-12 items-center">
-      <nuxt-link to="/">
-        <img src="/assets/icons/moovie-time-logo.png" class="h-8" />
-      </nuxt-link>
-      <div class="flex items-center bg-gray-800 text-gray-300 rounded-md p-2">
-        <div class="flex-shrink-0">
-          <img src="/assets/icons/moovie-logo.png" class="h-5" />
-        </div>
-        <input
-          type="text"
-          placeholder="Find movie"
-          class="flex-grow bg-transparent text-gray-300 placeholder-gray-500 px-4 focus:outline-none w-[700px]"
-        />
-        <div class="flex-shrink-0 flex items-center">
-          <button>
-            <img src="/assets/icons/search-logo.png" class="h-5" />
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-1 items-center justify-evenly">
-      <template v-for="menu in headerMenus" :key="menu.name">
-        <div v-if="menu.childs.length > 0" class="flex">
-          <!-- Button -->
-          <button
-            id="button-menu-categories"
-            type="button"
-            class="inline-flex justify-center gap-x-1.5 text-sm text-white hover:text-[#E74B3C] uppercase"
-            aria-expanded="false"
-            aria-controls="dropdown-menu-categories"
-            @click="toggleDropdown($event, 'menu-categories')"
-          >
-            <img src="/assets/icons/category-logo.png" class="h-5" />
-            {{ menu.name }}
-          </button>
-
-          <!-- Child menu -->
-          <div
-            id="dropdown-menu-categories"
-            class="absolute z-10 mt-8 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none hidden"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="button-menu-categories"
-          >
-            <div class="py-1" role="none">
-              <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
-              <!-- <a
-                  id="menu-item-0"
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  >Account settings</a
-                > -->
-              <template v-for="child in menu.childs" :key="child.name">
-                <nuxt-link
-                  :to="menu.link"
-                  class="block px-4 py-2 text-sm text-gray-700 uppercase hover:text-[#E74B3C]"
-                  >{{ child.name }}</nuxt-link
-                >
-              </template>
-            </div>
+  <header class="bg-[#292E36] h-[66px] flex">
+    <nav class="w-[1440px] flex flex-row mx-auto gap-28 px-8">
+      <div class="flex gap-8 items-center">
+        <nuxt-link to="/" class="w-[118px]">
+          <img src="/assets/icons/moovie-time-logo.png" class="h-8" />
+        </nuxt-link>
+        <div
+          class="flex flex-1 items-center bg-gray-800 text-gray-300 rounded-md p-2"
+        >
+          <div class="flex-shrink-0">
+            <img src="/assets/icons/moovie-logo.png" class="h-5" />
+          </div>
+          <input
+            type="text"
+            placeholder="Find movie"
+            class="flex-grow bg-transparent text-gray-300 placeholder-gray-500 px-4 focus:outline-none w-[33vw]"
+          />
+          <div class="flex-shrink-0 flex items-center">
+            <button>
+              <img src="/assets/icons/search-logo.png" class="h-5" />
+            </button>
           </div>
         </div>
-        <nuxt-link
-          v-else
-          class="uppercase text-sm text-white hover:text-[#E74B3C]"
-          :to="menu.link"
-        >
-          {{ menu.name }}
-        </nuxt-link>
-      </template>
-    </div>
-  </nav>
+      </div>
+      <div class="flex flex-1 justify-end">
+        <div class="flex flex-1 items-center justify-between">
+          <template v-for="menu in headerMenus" :key="menu.name">
+            <div v-if="menu.childs.length > 0" class="flex">
+              <!-- Button -->
+              <button
+                id="button-menu-categories"
+                type="button"
+                class="inline-flex justify-center gap-x-1.5 text-sm text-white hover:text-[#E74B3C] uppercase"
+                aria-expanded="false"
+                aria-controls="dropdown-menu-categories"
+                @click="toggleDropdown($event, 'menu-categories')"
+              >
+                <img src="/assets/icons/category-logo.png" class="h-5" />
+                {{ menu.name }}
+              </button>
+
+              <!-- Child menu -->
+              <div
+                id="dropdown-menu-categories"
+                class="absolute z-20 mt-8 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none hidden"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="button-menu-categories"
+              >
+                <div class="py-1" role="none">
+                  <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
+                  <!-- <a
+                       id="menu-item-0"
+                       href="#"
+                       class="block px-4 py-2 text-sm text-gray-700"
+                       role="menuitem"
+                       tabindex="-1"
+                       >Account settings</a
+                     > -->
+                  <template v-for="child in menu.childs" :key="child.name">
+                    <nuxt-link
+                      :to="menu.link"
+                      class="block px-4 py-2 text-sm text-gray-700 uppercase hover:text-[#E74B3C]"
+                      >{{ child.name }}</nuxt-link
+                    >
+                  </template>
+                </div>
+              </div>
+            </div>
+            <nuxt-link
+              v-else
+              class="uppercase text-sm text-white hover:text-[#E74B3C]"
+              :to="menu.link"
+            >
+              {{ menu.name }}
+            </nuxt-link>
+          </template>
+        </div>
+      </div>
+    </nav>
+  </header>
 </template>
 
 <script setup lang="ts">

@@ -17,7 +17,7 @@
             <div class="flex flex-row items-baseline gap-1">
               <img src="/assets/icons/star-logo.png" class="h-4" />
               <h6 class="text-lg text-white font-semibold">
-                {{ movie.vote_average }}
+                {{ movie.vote_average.toFixed(1) }}
               </h6>
             </div>
 

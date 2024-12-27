@@ -1,7 +1,6 @@
 <template>
   <div class="h-full">
-    <Navbar />
-    <main class="px-36 py-8">
+    <main class="py-8">
       <div class="flex">
         <!-- Filter Sidebar -->
         <aside class="w-[240px] mr-14">

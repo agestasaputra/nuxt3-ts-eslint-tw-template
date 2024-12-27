@@ -1,18 +1,15 @@
 <template>
   <div class="h-full">
-    <Navbar />
     <Slider
       :trending-movies="trendingMovies"
       @on-change-filter-discover-movies="onChangeFilterDiscoverMovies"
     />
-    <div class="bg-[#292E36] h-[300px]"></div>
+    <div class="absolute left-0 bg-[#292E36] h-[300px] w-full -z-10"></div>
     <Discover
       :filter-disscover-movies="filterDisscoverMovies"
       :discover-movies="discoverMovies"
       @on-change-filter-discover-movies="onChangeFilterDiscoverMovies"
     />
-    <div class="h-[58vw]"></div>
-    <Footer />
   </div>
 </template>
 
