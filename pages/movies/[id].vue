@@ -52,7 +52,11 @@
           <div>
             <h6 class="text-xs text-#FFFFFF80 text-gray-400">Production</h6>
             <p class="text-xs text-white uppercase">
-              {{ movie.production_companies[0].name }}
+              {{
+                movie.production_companies.length > 0
+                  ? movie.production_companies[0].name
+                  : "-"
+              }}
             </p>
             <!-- <div class="flex items-end">
               <p
@@ -101,7 +105,7 @@
       </div>
 
       <!-- Reviews -->
-      <section class="mt-14">
+      <section v-if="reviews && reviews.length > 0" class="mt-14">
         <h3 class="text-sm font-semibold text-[#FF0000] mb-6 uppercase">
           Reviews
         </h3>
@@ -123,8 +127,8 @@
         Recommendation Movies
       </h3>
       <div v-if="recommendationMovies" class="grid grid-cols-5 gap-6">
-        <template v-for="movie in recommendationMovies" :key="movie.id">
-          <CardMovie :movie="movie" />
+        <template v-for="item in recommendationMovies" :key="item.id">
+          <CardMovie :movie="item" />
         </template>
       </div>
     </section>

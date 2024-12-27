@@ -7,21 +7,41 @@
           <img src="/assets/icons/moovie-time-logo.png" class="h-8" />
         </nuxt-link>
         <div
-          class="flex flex-1 items-center bg-gray-800 text-gray-300 rounded-md p-2"
+          class="flex flex-1 items-center bg-[#1A1E24] text-gray-300 rounded-md p-2"
         >
           <div class="flex-shrink-0">
             <img src="/assets/icons/moovie-logo.png" class="h-5" />
           </div>
           <input
+            v-model="keyword"
             type="text"
             placeholder="Find movie"
             class="flex-grow bg-transparent text-gray-300 placeholder-gray-500 px-4 focus:outline-none w-[33vw]"
+            @input="onInputSearch"
           />
           <div class="flex-shrink-0 flex items-center">
             <button>
               <img src="/assets/icons/search-logo.png" class="h-5" />
             </button>
           </div>
+          <ul
+            v-if="results.length > 0"
+            class="absolute w-[35.5vw] max-h-[300px] bg-black z-30 top-14 rounded-md p-4 overflow-auto"
+          >
+            <li
+              v-for="result in results"
+              :key="result.id"
+              class="text-white pb-2 cursor-pointer hover:underline hover:text-[#E74B3C] capitalize"
+              @click="selectResult"
+            >
+              <nuxt-link
+                class="w-full inline-block"
+                :to="`/movies/${result.id}`"
+              >
+                {{ result.title }}
+              </nuxt-link>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="flex flex-1 justify-end">
@@ -84,7 +104,8 @@
 </template>
 
 <script setup lang="ts">
-import type { HeaderMenus } from "~/shared/interfaces";
+import type { HeaderMenus, Movie } from "~/shared/interfaces";
+import { authorization } from "~/shared/auth";
 
 const headerMenus = ref<HeaderMenus[]>([
   {
@@ -143,6 +164,9 @@ const headerMenus = ref<HeaderMenus[]>([
     childs: [],
   },
 ]);
+const keyword = ref<string>("");
+const results = ref<Movie[]>([]);
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 onMounted(() => {
   // Add event listener for clicks outside
@@ -182,6 +206,44 @@ function closeDropdownOnClickOutside(event: MouseEvent) {
   ) {
     buttonMenuCategories.setAttribute("aria-expanded", "false");
     dropdownMenuCategories.classList.add("hidden");
+  }
+}
+
+function onInputSearch(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (!input) return;
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    fetchMovieSuggestions(input.value);
+  }, 300);
+}
+
+function selectResult() {
+  keyword.value = "";
+  results.value = [];
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+}
+
+async function fetchMovieSuggestions(keyword: string) {
+  try {
+    const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&include_adult=false&language=en-US&page=1`;
+
+    const res = await $fetch<{
+      results: Movie[];
+      page: number;
+      total_pages: number;
+      total_results: number;
+    }>(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: authorization,
+      },
+    });
+    if (!res) throw new Error("Failed to fetch");
+    results.value = res.results;
+  } catch (error) {
+    console.error(error);
   }
 }
 </script>
